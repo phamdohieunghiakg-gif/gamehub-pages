@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /gamehub-pages/admin/
+Sitemap: https://phamdohieunghiakg-gif.github.io/gamehub-pages/sitemap.xml

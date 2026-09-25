@@ -45,7 +45,7 @@ async function localApi(url,opt={}){const method=String(opt.method||'GET').toUpp
   throw new Error(`API tĩnh chưa hỗ trợ: ${method} ${url}`)
 }
 async function api(url,opt={}){if(String(url).startsWith('/api/'))return localApi(String(url),opt);const r=await fetch(url,opt);let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.error||`Lỗi ${r.status}`);return d}
-function route(){const p=currentPath();if(p==='/donate'){show('donateView');return}if(p==='/admin'){show('adminView');syncAdmin();return}if(p.startsWith('/game/')){show('detailView');renderDetail(decodeURIComponent(p.split('/').pop()));return}show('homeView')}
+function route(){let p=currentPath();if(p.length>1)p=p.replace(/\/+$/,'');if(p==='/donate'){show('donateView');return}if(p==='/admin'){show('adminView');syncAdmin();return}if(p.startsWith('/game/')){const slug=decodeURIComponent(p.slice('/game/'.length));show('detailView');renderDetail(slug);return}show('homeView')}
 document.addEventListener('click',e=>{
   const g=e.target.closest('[data-go]');
   if(g){
@@ -126,7 +126,7 @@ function renderCatalog(arr,q){
   gamePage=Math.min(gamePage,totalPages);
   const start=(gamePage-1)*gamesPerPage, pageGames=arr.slice(start,start+gamesPerPage);
   $('#gameCount').textContent=arr.length?`${start+1}–${Math.min(start+gamesPerPage,arr.length)} / ${arr.length} game`:'0 game';
-  $('#posts').innerHTML=pageGames.map(g=>`<article class="post"><a class="game-card" href="${esc(sitePath('/game/'+encodeURIComponent(g.slug)))}" data-go="/game/${encodeURIComponent(g.slug)}"><div class="thumb"><img src="${esc(gameImage(g))}" alt="" loading="lazy" decoding="async">${gameBadges(g)}</div><div class="post-body"><h2>${esc(g.title)}</h2><p>${esc(g.summary||'Khám phá thông tin và các phiên bản của game.')}<span class="read" aria-hidden="true"> Xem bài ↗</span></p></div></a></article>`).join('')||(games.length?'<div class="box catalog-empty"><h3>Không tìm thấy game phù hợp</h3><p>Thử từ khóa khác hoặc chọn lại thể loại.</p><button class="btn" data-go="/">Xem tất cả game</button></div>':'<div class="box catalog-empty">Chưa có bài game.</div>');
+  $('#posts').innerHTML=pageGames.map(g=>`<article class="post"><a class="game-card" href="${esc(sitePath('/game/'+encodeURIComponent(g.slug)+'/'))}" data-go="/game/${encodeURIComponent(g.slug)}"><div class="thumb"><img src="${esc(gameImage(g))}" alt="" loading="lazy" decoding="async">${gameBadges(g)}</div><div class="post-body"><h2>${esc(g.title)}</h2><p>${esc(g.summary||'Khám phá thông tin và các phiên bản của game.')}<span class="read" aria-hidden="true"> Xem bài ↗</span></p></div></a></article>`).join('')||(games.length?'<div class="box catalog-empty"><h3>Không tìm thấy game phù hợp</h3><p>Thử từ khóa khác hoặc chọn lại thể loại.</p><button class="btn" data-go="/">Xem tất cả game</button></div>':'<div class="box catalog-empty">Chưa có bài game.</div>');
   applyImageFallback($('#posts'));
   const pageButton=(page,label,attrs='')=>`<button type="button" data-page="${page}" ${attrs}>${label}</button>`;
   const numbers=[...new Set([1,gamePage-1,gamePage,gamePage+1,totalPages])].filter(page=>page>=1&&page<=totalPages).sort((a,b)=>a-b);
@@ -150,7 +150,7 @@ function drawFeatured(animate=false){
   const incoming=document.createElement('div');
   incoming.className='featured-slide';incoming.setAttribute('role','group');
   incoming.setAttribute('aria-label',`${featureIndex+1} trên ${featureGames.length}`);
-  incoming.innerHTML=`<img class="featured-image" src="${esc(gameImage(g))}" alt="" fetchpriority="high"><div class="featured-shade"></div><div class="featured-copy"><div class="featured-text"><h2>${esc(g.title)}</h2><p>${esc(g.summary||'Khám phá thông tin và những phiên bản mới nhất của game.')}</p></div><a class="featured-link" href="${esc(sitePath('/game/'+encodeURIComponent(g.slug)))}" data-go="/game/${encodeURIComponent(g.slug)}">XEM BÀI</a></div>`;
+  incoming.innerHTML=`<img class="featured-image" src="${esc(gameImage(g))}" alt="" fetchpriority="high"><div class="featured-shade"></div><div class="featured-copy"><div class="featured-text"><h2>${esc(g.title)}</h2><p>${esc(g.summary||'Khám phá thông tin và những phiên bản mới nhất của game.')}</p></div><a class="featured-link" href="${esc(sitePath('/game/'+encodeURIComponent(g.slug)+'/'))}" data-go="/game/${encodeURIComponent(g.slug)}">XEM BÀI</a></div>`;
   applyImageFallback(incoming);
   // Load the following cover before its turn so sliding does not reveal an empty image.
   if(featureGames.length>1){const preload=new Image();preload.src=gameImage(featureGames[(featureIndex+1)%featureGames.length])}
