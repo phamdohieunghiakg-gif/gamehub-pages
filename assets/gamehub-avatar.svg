@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
+  <title>GameHub — Play your story</title>
+  <defs>
+    <linearGradient id="rim" x1="28" y1="18" x2="228" y2="245" gradientUnits="userSpaceOnUse"><stop stop-color="#C4ADFF"/><stop offset=".5" stop-color="#9069F5"/><stop offset="1" stop-color="#FF6E9B"/></linearGradient>
+    <linearGradient id="pad" x1="74" y1="87" x2="188" y2="179" gradientUnits="userSpaceOnUse"><stop stop-color="#F5F0FF"/><stop offset="1" stop-color="#C2B0F8"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#8352CF" stop-opacity=".55"/><stop offset="1" stop-color="#121627" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect x="5" y="5" width="246" height="246" rx="70" fill="#101424" stroke="url(#rim)" stroke-width="6"/>
+  <circle cx="131" cy="120" r="116" fill="url(#glow)"/>
+  <path d="M128 29 208 75v91l-80 47-80-47V75Z" stroke="url(#rim)" stroke-opacity=".3" stroke-width="2"/>
+  <path d="M97 90h62c21 0 32 12 37 33l10 42c4 18-12 29-25 16l-22-22H97l-22 22c-13 13-29 2-25-16l10-42c5-21 16-33 37-33Z" fill="url(#pad)"/>
+  <path d="M91 112v31m-15-15h30" stroke="#26213F" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="167" cy="119" r="7" fill="#8857D9"/>
+  <circle cx="182" cy="135" r="7" fill="#F36996"/>
+  <path d="m113 128 10-14h15l-11 15h14l-21 22 6-23Z" fill="#8055CF"/>
+  <path d="m191 46 3 9 9 3-9 3-3 9-3-9-9-3 9-3Z" fill="#FF99B4"/>
+  <circle cx="64" cy="65" r="4" fill="#BCA3FF"/>
+  <path d="M100 213h56" stroke="url(#rim)" stroke-width="5" stroke-linecap="round"/>
+</svg>
